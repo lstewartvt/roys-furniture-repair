@@ -1518,30 +1518,211 @@
                     // For Chrome, try the mailto link first
                     try {
                         window.location.href = href;
-                    } catch (e) {
-                        // If it fails, provide a fallback
-                        const email = 'fitzstew@gmail.com';
-                        const urlParams = new URLSearchParams(href.split('?')[1]);
-                        const subject = urlParams.get('subject') || '';
-                        const body = urlParams.get('body') || '';
                         
-                        // Try a simpler mailto link
-                        const simpleMailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
-                        window.location.href = simpleMailto;
-                        
-                        // Show helpful message
+                        // Check if mailto actually worked by seeing if we're still on the page
                         setTimeout(() => {
-                            alert(`If your email didn't open, please email Roy directly at: ${email}\n\nSubject: ${subject}`);
-                        }, 1000);
+                            // If we're still here after 2 seconds, mailto probably failed
+                            trySimplifiedMailto(href);
+                        }, 2000);
+                        
+                    } catch (e) {
+                        trySimplifiedMailto(href);
                     }
                 } else {
                     // For other browsers, use the full mailto link
                     window.location.href = href;
                 }
             }
+            
+            function trySimplifiedMailto(originalHref) {
+                const email = 'fitzstew@gmail.com';
+                const urlParams = new URLSearchParams(originalHref.split('?')[1]);
+                const subject = urlParams.get('subject') || '';
+                const body = urlParams.get('body') || '';
+                
+                // Try a simpler mailto link
+                const simpleMailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+                
+                try {
+                    window.location.href = simpleMailto;
+                    
+                    // Check again if this worked
+                    setTimeout(() => {
+                        showEmailFallbackModal(email, subject, body);
+                    }, 2000);
+                    
+                } catch (e) {
+                    showEmailFallbackModal(email, subject, body);
+                }
+            }
+            
+            function showEmailFallbackModal(email, subject, body) {
+                // Create modal overlay
+                const modalOverlay = document.createElement('div');
+                modalOverlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.7);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                    padding: 20px;
+                `;
+                
+                // Create modal content
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    background: white;
+                    border-radius: 10px;
+                    padding: 30px;
+                    max-width: 500px;
+                    width: 100%;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                `;
+                
+                modal.innerHTML = `
+                    <h3 style="color: #2c3e50; margin-bottom: 20px; text-align: center;">📧 Email Details</h3>
+                    <p style="margin-bottom: 15px; color: #666;">Your email client didn't open automatically. Here are the details to contact Roy manually:</p>
+                    
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #3498db;">
+                        <p style="margin: 0 0 10px 0;"><strong>Email:</strong> <span id="emailAddress">${email}</span></p>
+                        <p style="margin: 0 0 10px 0;"><strong>Phone:</strong> (703) 981-1656</p>
+                        <p style="margin: 0;"><strong>Subject:</strong> ${subject}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2c3e50;">Message Template:</label>
+                        <textarea id="emailTemplate" readonly style="width: 100%; height: 120px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit; resize: vertical;">${body.replace(/%0D%0A/g, '\n')}</textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                        <button onclick="copyEmailDetails()" style="background: #3498db; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">📋 Copy All Details</button>
+                        <button onclick="copyEmailOnly()" style="background: #27ae60; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">📧 Copy Email Only</button>
+                        <a href="tel:+17039811656" style="background: #e74c3c; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block;">📞 Call Instead</a>
+                        <button onclick="closeEmailModal()" style="background: #95a5a6; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">✕ Close</button>
+                    </div>
+                `;
+                
+                modalOverlay.appendChild(modal);
+                document.body.appendChild(modalOverlay);
+                
+                // Store reference for cleanup
+                window.currentEmailModal = modalOverlay;
+                
+                // Close on overlay click
+                modalOverlay.addEventListener('click', function(e) {
+                    if (e.target === modalOverlay) {
+                        closeEmailModal();
+                    }
+                });
+                
+                // Close on Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        closeEmailModal();
+                    }
+                });
+            }
+            
+            function copyEmailDetails() {
+                const email = document.getElementById('emailAddress').textContent;
+                const template = document.getElementById('emailTemplate').value;
+                const subject = document.querySelector('#emailTemplate').closest('div').previousElementSibling.querySelector('p:last-child').textContent.replace('Subject: ', '');
+                
+                const fullDetails = `Email: ${email}
+Phone: (703) 981-1656
+Subject: ${subject}
 
-            // Make the function globally available
+Message:
+${template}`;
+
+                copyToClipboard(fullDetails, 'All email details copied to clipboard!');
+            }
+            
+            function copyEmailOnly() {
+                const email = document.getElementById('emailAddress').textContent;
+                copyToClipboard(email, 'Email address copied to clipboard!');
+            }
+            
+            function copyToClipboard(text, successMessage) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        showCopySuccess(successMessage);
+                    }).catch(() => {
+                        fallbackCopy(text, successMessage);
+                    });
+                } else {
+                    fallbackCopy(text, successMessage);
+                }
+            }
+            
+            function fallbackCopy(text, successMessage) {
+                // Create temporary textarea for fallback copy
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopySuccess(successMessage);
+                } catch (err) {
+                    showCopySuccess('Please manually copy the details above');
+                }
+                
+                document.body.removeChild(textArea);
+            }
+            
+            function showCopySuccess(message) {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #27ae60;
+                    color: white;
+                    padding: 12px 20px;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    z-index: 10001;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                toast.textContent = message;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease-in';
+                    setTimeout(() => {
+                        if (document.body.contains(toast)) {
+                            document.body.removeChild(toast);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+            
+            function closeEmailModal() {
+                if (window.currentEmailModal) {
+                    document.body.removeChild(window.currentEmailModal);
+                    window.currentEmailModal = null;
+                }
+            }
+
+            // Make functions globally available
             window.handleEmailClick = handleEmailClick;
+            window.copyEmailDetails = copyEmailDetails;
+            window.copyEmailOnly = copyEmailOnly;
+            window.closeEmailModal = closeEmailModal;
         });
 
         // Add CSS for enhanced navigation and scroll-to-top
@@ -1610,6 +1791,29 @@
             /* Adjust scroll margin when nav is sticky */
             body.nav-sticky section {
                 scroll-margin-top: 80px;
+            }
+
+            /* Animations for email fallback notifications */
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
             }
         `;
         document.head.appendChild(style);
