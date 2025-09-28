@@ -257,6 +257,34 @@
         nav {
             background: #34495e;
             padding: 0.5rem 0;
+            position: relative;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Add padding to body when nav becomes sticky */
+        body.nav-sticky {
+            padding-top: 70px;
         }
 
         .nav-links {
@@ -275,7 +303,7 @@
             text-decoration: none;
             padding: 10px 15px;
             border-radius: 5px;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover {
@@ -960,8 +988,46 @@
     </footer>
 
     <script>
-        // TypeScript-style JavaScript for smooth scrolling and navigation
+        // JavaScript for smooth scrolling and navigation
         document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.querySelector('nav');
+            const body = document.body;
+            const header = document.querySelector('header');
+            let isNavSticky = false;
+            let headerHeight = 0;
+
+            // Calculate header height after DOM is loaded
+            function calculateHeaderHeight() {
+                if (header) {
+                    headerHeight = header.offsetHeight;
+                }
+            }
+            
+            // Initial calculation
+            calculateHeaderHeight();
+            
+            // Recalculate on window resize
+            window.addEventListener('resize', calculateHeaderHeight);
+
+            // Sticky navigation functionality
+            function handleStickyNav() {
+                if (!nav) return;
+                
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > headerHeight && !isNavSticky) {
+                    nav.classList.add('sticky');
+                    body.classList.add('nav-sticky');
+                    isNavSticky = true;
+                    console.log('Nav became sticky at scroll:', scrollTop, 'header height:', headerHeight);
+                } else if (scrollTop <= headerHeight && isNavSticky) {
+                    nav.classList.remove('sticky');
+                    body.classList.remove('nav-sticky');
+                    isNavSticky = false;
+                    console.log('Nav unstuck at scroll:', scrollTop);
+                }
+            }
+
             // Smooth scrolling for all navigation links
             const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
             
@@ -976,8 +1042,8 @@
                         // Update URL hash
                         history.pushState(null, null, href);
                         
-                        // Add offset for fixed header if needed
-                        const headerOffset = 80;
+                        // Add offset for sticky nav
+                        const headerOffset = isNavSticky ? 80 : 120;
                         const elementPosition = targetElement.getBoundingClientRect().top;
                         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -997,7 +1063,7 @@
                     if (targetElement) {
                         // Small delay to ensure page is fully loaded
                         setTimeout(function() {
-                            const headerOffset = 80;
+                            const headerOffset = isNavSticky ? 80 : 120;
                             const elementPosition = targetElement.getBoundingClientRect().top;
                             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -1018,45 +1084,60 @@
                 handleHashOnLoad();
             });
 
-            // Handle CTA button click - scroll to contact instead of opening email immediately
-            const ctaButton = document.querySelector('.cta-button');
-            if (ctaButton) {
-                ctaButton.addEventListener('click', function(e) {
-                    // Allow the mailto link to work normally - don't prevent default
-                    // This way users can either email directly or scroll to contact for more info
-                });
-            }
-
-            // Add active navigation highlighting (exclude home section)
+            // Enhanced active navigation highlighting
             function highlightActiveSection() {
-                const sections = document.querySelectorAll('section[id]:not(#home)');
-                const navLinks = document.querySelectorAll('.nav-links a[href^="#"]:not([href="#home"])');
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
                 
-                let current = '';
+                let current = 'home'; // Default to home
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const headerOffset = isNavSticky ? 80 : 120;
+                
+                // Check each section to find the current one
                 sections.forEach(function(section) {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-                    if (window.pageYOffset >= (sectionTop - 200)) {
-                        current = section.getAttribute('id');
+                    const sectionTop = section.offsetTop - headerOffset - 50;
+                    const sectionBottom = sectionTop + section.clientHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (sectionId && scrollTop >= sectionTop && scrollTop < sectionBottom) {
+                        current = sectionId;
                     }
                 });
 
+                // Special case for top of page (home section)
+                if (scrollTop < 100) {
+                    current = 'home';
+                }
+
                 // Remove active class from all nav links
-                document.querySelectorAll('.nav-links a').forEach(function(link) {
+                navLinks.forEach(function(link) {
                     link.classList.remove('active');
                 });
 
-                // Add active class to current section link (if not home)
-                if (current && current !== 'home') {
-                    const activeLink = document.querySelector('.nav-links a[href="#' + current + '"]');
-                    if (activeLink) {
-                        activeLink.classList.add('active');
-                    }
+                // Add active class to current section link
+                const activeLink = document.querySelector('.nav-links a[href="#' + current + '"]');
+                if (activeLink) {
+                    activeLink.classList.add('active');
                 }
             }
 
-            // Listen for scroll events to highlight active section
-            window.addEventListener('scroll', highlightActiveSection);
+            // Listen for scroll events to handle sticky nav and highlight active section
+            function handleScroll() {
+                handleStickyNav();
+                highlightActiveSection();
+            }
+
+            // Throttle scroll events for better performance
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                if (scrollTimeout) {
+                    cancelAnimationFrame(scrollTimeout);
+                }
+                scrollTimeout = requestAnimationFrame(handleScroll);
+            });
+
+            // Initial call to set correct state
+            handleScroll();
 
             // Read More functionality for testimonials
             const readMoreButtons = document.querySelectorAll('.read-more-btn');
@@ -1064,6 +1145,8 @@
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     const testimonialText = button.closest('.testimonial-text');
+                    if (!testimonialText) return;
+                    
                     const preview = testimonialText.querySelector('.testimonial-preview');
                     const full = testimonialText.querySelector('.testimonial-full');
                     
@@ -1116,7 +1199,8 @@
                 document.body.appendChild(scrollButton);
 
                 window.addEventListener('scroll', function() {
-                    if (window.pageYOffset > 300) {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    if (scrollTop > 300) {
                         scrollButton.style.display = 'block';
                     } else {
                         scrollButton.style.display = 'none';
@@ -1148,6 +1232,12 @@
             .nav-links a.active {
                 background: #3498db;
                 color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+            }
+
+            .nav-links a {
+                transition: all 0.3s ease;
             }
 
             .scroll-to-top {
@@ -1181,6 +1271,11 @@
 
             /* Add subtle scroll padding for better section targeting */
             section {
+                scroll-margin-top: 120px;
+            }
+
+            /* Adjust scroll margin when nav is sticky */
+            body.nav-sticky section {
                 scroll-margin-top: 80px;
             }
         `;
