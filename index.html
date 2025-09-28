@@ -1170,6 +1170,12 @@
                         <i>🚛</i>
                         <span>Mobile Service Available</span>
                     </div>
+                    <div style="margin-top: 20px;">
+                        <button onclick="showEmailFallbackModal('fitzstew@gmail.com', 'Demo Subject', 'This is a demo of the email fallback modal that appears when mailto links fail in Chrome or other browsers.')" 
+                                style="background: #95a5a6; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">
+                            🔍 Preview Email Modal
+                        </button>
+                    </div>
                 </div>
                 <div class="hours-info">
                     <h3>Business Hours</h3>
@@ -1511,48 +1517,95 @@
             function handleEmailClick(linkElement) {
                 const href = linkElement.getAttribute('href');
                 
+                // Extract email details for fallback
+                const email = 'fitzstew@gmail.com';
+                const urlParams = new URLSearchParams(href.split('?')[1]);
+                const subject = urlParams.get('subject') || '';
+                const body = urlParams.get('body') || '';
+                
                 // Check if we're in Chrome
                 const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
                 
                 if (isChrome) {
-                    // For Chrome, try the mailto link first
+                    // For Chrome, try to detect if mailto will fail and provide immediate options
+                    const urlLength = href.length;
+                    
+                    // Chrome's typical URL limit is around 2048 characters
+                    if (urlLength > 2000) {
+                        // URL is likely too long, show modal immediately
+                        showEmailFallbackModal(email, subject, body);
+                        return;
+                    }
+                    
+                    // Try the mailto link (must be immediate to preserve user gesture)
                     try {
                         window.location.href = href;
                         
-                        // Check if mailto actually worked by seeing if we're still on the page
+                        // If no error was thrown, the link might work
+                        // But we can't reliably detect if it opened an email client
+                        // So we'll show a small help message after a short delay
                         setTimeout(() => {
-                            // If we're still here after 2 seconds, mailto probably failed
-                            trySimplifiedMailto(href);
-                        }, 2000);
+                            showEmailHelpToast(email, subject, body);
+                        }, 3000);
                         
                     } catch (e) {
-                        trySimplifiedMailto(href);
+                        // If immediate error, show modal
+                        showEmailFallbackModal(email, subject, body);
                     }
                 } else {
-                    // For other browsers, use the full mailto link
-                    window.location.href = href;
+                    // For other browsers, try the full mailto link
+                    try {
+                        window.location.href = href;
+                    } catch (e) {
+                        showEmailFallbackModal(email, subject, body);
+                    }
                 }
             }
             
-            function trySimplifiedMailto(originalHref) {
-                const email = 'fitzstew@gmail.com';
-                const urlParams = new URLSearchParams(originalHref.split('?')[1]);
-                const subject = urlParams.get('subject') || '';
-                const body = urlParams.get('body') || '';
-                
-                // Try a simpler mailto link
-                const simpleMailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
-                
-                try {
-                    window.location.href = simpleMailto;
+            function showEmailHelpToast(email, subject, body) {
+                // Only show if user is still on the page (email client might not have opened)
+                if (document.hasFocus()) {
+                    const toast = document.createElement('div');
+                    toast.style.cssText = `
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        background: #34495e;
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        z-index: 10001;
+                        max-width: 300px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        animation: slideIn 0.3s ease-out;
+                        cursor: pointer;
+                    `;
                     
-                    // Check again if this worked
-                    setTimeout(() => {
+                    toast.innerHTML = `
+                        <div style="margin-bottom: 8px; font-weight: bold;">📧 Email not opening?</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Click here for contact options</div>
+                    `;
+                    
+                    document.body.appendChild(toast);
+                    
+                    // Click to show full modal
+                    toast.addEventListener('click', () => {
+                        document.body.removeChild(toast);
                         showEmailFallbackModal(email, subject, body);
-                    }, 2000);
+                    });
                     
-                } catch (e) {
-                    showEmailFallbackModal(email, subject, body);
+                    // Auto-remove after 8 seconds
+                    setTimeout(() => {
+                        if (document.body.contains(toast)) {
+                            toast.style.animation = 'slideOut 0.3s ease-in';
+                            setTimeout(() => {
+                                if (document.body.contains(toast)) {
+                                    document.body.removeChild(toast);
+                                }
+                            }, 300);
+                        }
+                    }, 8000);
                 }
             }
             
