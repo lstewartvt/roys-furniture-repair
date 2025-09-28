@@ -215,6 +215,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 20px;
         }
 
         .logo {
@@ -234,12 +235,18 @@
             justify-content: center;
             margin-right: 15px;
             font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            flex-shrink: 0;
         }
 
         .contact-header {
             display: flex;
             flex-direction: column;
             text-align: right;
+            flex-shrink: 0;
         }
 
         .phone {
@@ -320,6 +327,11 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            min-height: 60px;
+        }
+
+        .nav-spacer {
+            display: none;
         }
 
         .nav-links {
@@ -362,9 +374,15 @@
                 position: relative;
             }
 
+            .nav-spacer {
+                display: block;
+                width: 44px;
+                height: 44px;
+                visibility: hidden;
+            }
+
             .mobile-menu-button {
                 display: block;
-                order: 2;
             }
 
             .nav-links {
@@ -383,7 +401,6 @@
                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 box-shadow: 0 2px 20px rgba(0,0,0,0.3);
                 z-index: 999;
-                order: 1;
             }
 
             .nav-links.mobile-open {
@@ -756,18 +773,66 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            header {
+                padding: 0.8rem 0;
+            }
+
             .header-content {
                 flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                margin-right: 0;
+                margin-bottom: 0;
+                font-size: 22px;
+            }
+
+            .logo-text {
                 text-align: center;
             }
 
             .contact-header {
                 text-align: center;
-                margin-top: 20px;
+                margin: 0;
+            }
+
+            .phone {
+                font-size: 1.1rem;
+            }
+
+            .service-area {
+                font-size: 0.85rem;
+            }
+
+            /* Hero section mobile improvements */
+            .hero {
+                padding: 60px 0;
             }
 
             .hero h1 {
                 font-size: 2rem;
+                padding: 0 10px;
+                margin-bottom: 15px;
+            }
+
+            .hero p {
+                padding: 0 10px;
+                margin-bottom: 25px;
             }
 
             .about div[style*="grid-template-columns"] {
@@ -780,6 +845,7 @@
             .cta-button {
                 padding: 18px 35px;
                 font-size: 1.2rem;
+                margin: 0 10px;
             }
 
             .service-card {
@@ -834,7 +900,7 @@
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">🔨</div>
-                    <div>
+                    <div class="logo-text">
                         <div>Roy's Furniture Repair</div>
                         <div style="font-size: 0.6em; font-weight: normal;">Professional Restoration Services</div>
                     </div>
@@ -850,9 +916,8 @@
     <nav>
         <div class="container">
             <div class="nav-container">
-                <button class="mobile-menu-button" aria-label="Toggle navigation menu">
-                    <span class="hamburger-icon">☰</span>
-                </button>
+                <!-- Invisible spacer for mobile to center nav links -->
+                <div class="nav-spacer"></div>
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
@@ -861,6 +926,9 @@
                     <li><a href="#testimonials">Testimonials</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <button class="mobile-menu-button" aria-label="Toggle navigation menu">
+                    <span class="hamburger-icon">☰</span>
+                </button>
             </div>
         </div>
         <div class="mobile-menu-overlay"></div>
@@ -929,11 +997,6 @@
                     <div class="service-icon">🎨</div>
                     <h3>Upholstery & Fabric Repair</h3>
                     <p>Professional upholstery services including invisible fabric tear repair, complete reupholstering, cushion refurbishment, and spring repair for chairs, sofas, and other upholstered pieces.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">⚙️</div>
-                    <h3>Recliner & Mechanism Repair</h3>
-                    <p>Specialized repair of power and manual recliners, sectional sofa mechanisms, and moving furniture components. Expert troubleshooting and problem-solving for smooth operation and longevity.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">⚙️</div>
@@ -1256,15 +1319,9 @@
             // Recalculate on window resize
             window.addEventListener('resize', calculateHeaderHeight);
 
-            // Debug: Check if elements are found
-            console.log('Mobile menu button found:', !!mobileMenuButton);
-            console.log('Nav links found:', !!navLinks);
-            console.log('Mobile menu overlay found:', !!mobileMenuOverlay);
-
             // Mobile menu functionality
             function toggleMobileMenu() {
                 isMobileMenuOpen = !isMobileMenuOpen;
-                console.log('Toggle mobile menu:', isMobileMenuOpen);
                 
                 if (isMobileMenuOpen) {
                     navLinks.classList.add('mobile-open');
@@ -1273,7 +1330,6 @@
                     if (mobileMenuButton.querySelector('.hamburger-icon')) {
                         mobileMenuButton.querySelector('.hamburger-icon').textContent = '✕';
                     }
-                    console.log('Mobile menu opened');
                 } else {
                     navLinks.classList.remove('mobile-open');
                     mobileMenuOverlay.classList.remove('active');
@@ -1281,7 +1337,6 @@
                     if (mobileMenuButton.querySelector('.hamburger-icon')) {
                         mobileMenuButton.querySelector('.hamburger-icon').textContent = '☰';
                     }
-                    console.log('Mobile menu closed');
                 }
             }
 
@@ -1325,12 +1380,10 @@
                     nav.classList.add('sticky');
                     body.classList.add('nav-sticky');
                     isNavSticky = true;
-                    console.log('Nav became sticky at scroll:', scrollTop, 'header height:', headerHeight);
                 } else if (scrollTop <= headerHeight && isNavSticky) {
                     nav.classList.remove('sticky');
                     body.classList.remove('nav-sticky');
                     isNavSticky = false;
-                    console.log('Nav unstuck at scroll:', scrollTop);
                 }
             }
 
