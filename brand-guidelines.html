@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roy's Furniture Repair — Brand Guidelines</title>
+<meta name="description" content="Colour system, typography, spacing, component patterns and logo usage rules for Roy's Furniture Repair.">
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  /* Wood — primary */
+  --wood-espresso: #3E2415;
+  --wood-dark: #5A3620;
+  --wood-mid: #6B4423;
+  --wood-warm: #8B5A2B;
+  --oak: #C08A4E;
+  --oak-light: #D9AE74;
+
+  /* Parchment — neutrals */
+  --parchment: #F5E7C8;
+  --parchment-soft: #FAF4E9;
+  --cream: #FFFDF8;
+  --ink: #2B1C12;
+  --ink-muted: #6E5946;
+
+  /* Steel — secondary */
+  --steel: #9AA0A6;
+  --steel-dark: #5F6670;
+
+  /* Rust — action */
+  --rust: #B5461F;
+  --rust-dark: #8F3616;
+
+  /* Semantic */
+  --success: #4A7C3F;
+  --star: #D9A020;
+
+  /* Type */
+  --font-display: 'Bitter', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               'Helvetica Neue', Arial, sans-serif;
+
+  --text-h1: clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem);
+  --text-h2: clamp(1.875rem, 1.55rem + 1.4vw, 2.5rem);
+  --text-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --text-body: clamp(1rem, 0.99rem + 0.05vw, 1.0625rem);
+  --text-small: 0.875rem;
+
+  /* Spacing — 4px base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Radii */
+  --radius-button: 8px;
+  --radius-card: 12px;
+  --radius-panel: 14px;
+  --radius-pill: 999px;
+
+  /* Warm shadows — never neutral grey */
+  --shadow-sm: 0 1px 2px rgba(62, 36, 21, 0.06);
+  --shadow-card: 0 2px 8px rgba(62, 36, 21, 0.10);
+  --shadow-card-hover: 0 8px 24px rgba(62, 36, 21, 0.16);
+  --shadow-overlay: 0 16px 48px rgba(62, 36, 21, 0.28);
+
+  --border-hairline: 1px solid var(--oak-light);
+  --measure: 68ch;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background-color: var(--parchment-soft);
+  /* Wood-grain texture: two near-invisible gradient passes, no image request. */
+  background-image:
+    repeating-linear-gradient(94deg,
+      rgba(139, 90, 43, 0.030) 0px,
+      rgba(139, 90, 43, 0.030) 1px,
+      transparent 1px, transparent 4px),
+    repeating-linear-gradient(92deg,
+      rgba(62, 36, 21, 0.018) 0px,
+      rgba(62, 36, 21, 0.018) 2px,
+      transparent 2px, transparent 11px);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.7;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  color: var(--wood-espresso);
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+p { margin: 0 0 var(--space-4); max-width: var(--measure); }
+code, .mono {
+  background: rgba(139, 90, 43, 0.10);
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+}
+a { color: var(--wood-warm); }
+
+:where(a, button, summary):focus-visible {
+  outline: 3px solid var(--rust);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.wrap { margin: 0 auto; max-width: 1120px; padding: 0 var(--space-6); }
+
+/* ============================================================
+   MASTHEAD
+   ============================================================ */
+.masthead {
+  background-color: var(--wood-espresso);
+  background-image:
+    repeating-linear-gradient(93deg,
+      rgba(217, 174, 116, 0.055) 0px,
+      rgba(217, 174, 116, 0.055) 1px,
+      transparent 1px, transparent 5px);
+  color: var(--parchment-soft);
+  padding: var(--space-20) 0 var(--space-16);
+}
+.masthead h1 { color: var(--cream); font-size: var(--text-h1); }
+.masthead .eyebrow {
+  color: var(--oak-light);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  margin-bottom: var(--space-4);
+  text-transform: uppercase;
+}
+.masthead .lede {
+  color: var(--parchment);
+  font-size: 1.15rem;
+  margin: var(--space-6) 0 0;
+  max-width: 60ch;
+}
+
+/* ============================================================
+   SECTION BANDS + RIBBON HEADING (signature device)
+   The logo carries a parchment ribbon banner; section titles reuse it.
+   ============================================================ */
+.band { padding: var(--space-20) 0; }
+.band--cream { background: var(--cream); }
+.band--parchment { background: var(--parchment); }
+
+.ribbon {
+  display: inline-block;
+  margin-bottom: var(--space-8);
+  position: relative;
+}
+.ribbon h2 {
+  background: var(--parchment);
+  border: 2px solid var(--wood-espresso);
+  border-radius: 4px;
+  font-size: var(--text-h2);
+  padding: var(--space-2) var(--space-8);
+  position: relative;
+  z-index: 1;
+}
+.band--parchment .ribbon h2 { background: var(--cream); }
+/* Folded ribbon tails */
+.ribbon::before, .ribbon::after {
+  background: var(--wood-mid);
+  bottom: -7px;
+  content: "";
+  height: 14px;
+  position: absolute;
+  width: 22px;
+}
+.ribbon::before { left: -8px; clip-path: polygon(0 0, 100% 0, 100% 100%); }
+.ribbon::after { right: -8px; clip-path: polygon(0 0, 100% 0, 0 100%); }
+
+.section-note {
+  color: var(--ink-muted);
+  margin-bottom: var(--space-12);
+  max-width: var(--measure);
+}
+
+h3.sub {
+  font-size: var(--text-h3);
+  margin: var(--space-12) 0 var(--space-4);
+}
+h3.sub:first-of-type { margin-top: 0; }
+
+.divider {
+  align-items: center;
+  color: var(--oak);
+  display: flex;
+  gap: var(--space-4);
+  margin: var(--space-12) 0;
+}
+.divider::before, .divider::after {
+  background: var(--oak-light);
+  content: "";
+  flex: 1;
+  height: 1px;
+}
+
+/* ============================================================
+   COLOUR SWATCHES
+   ============================================================ */
+.swatch-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  margin-bottom: var(--space-8);
+}
+.swatch {
+  background: var(--cream);
+  border: var(--border-hairline);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.swatch__chip { height: 88px; }
+.swatch__body { padding: var(--space-3) var(--space-4) var(--space-4); }
+.swatch__token {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--wood-espresso);
+}
+.swatch__hex {
+  color: var(--ink-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+.swatch__use {
+  color: var(--ink-muted);
+  display: block;
+  font-size: var(--text-small);
+  line-height: 1.45;
+  margin-top: var(--space-2);
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table.data {
+  background: var(--cream);
+  border: var(--border-hairline);
+  border-collapse: collapse;
+  border-radius: var(--radius-card);
+  min-width: 640px;
+  overflow: hidden;
+  width: 100%;
+}
+table.data th {
+  background: var(--wood-espresso);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  text-transform: uppercase;
+}
+table.data td {
+  border-top: 1px solid rgba(217, 174, 116, 0.5);
+  font-size: 0.95rem;
+  padding: var(--space-3) var(--space-4);
+  vertical-align: top;
+}
+table.data tr:nth-child(even) td { background: rgba(245, 231, 200, 0.32); }
+table.data td:first-child {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+.ratio { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.grade {
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 2px 10px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.grade--aaa  { background: var(--success); color: #fff; }
+.grade--aa   { background: var(--oak-light); color: var(--wood-espresso); }
+.grade--large{ background: var(--parchment); border: 1px solid var(--wood-warm); color: var(--wood-espresso); }
+.grade--fail { background: var(--rust-dark); color: #fff; }
+
+/* ============================================================
+   TYPE SPECIMEN
+   ============================================================ */
+.specimen {
+  background: var(--cream);
+  border: var(--border-hairline);
+  border-left: 4px solid var(--oak);
+  border-radius: var(--radius-card);
+  margin-bottom: var(--space-6);
+  padding: var(--space-6);
+}
+.specimen__meta {
+  color: var(--ink-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  margin-bottom: var(--space-3);
+}
+.specimen__demo { margin: 0; max-width: none; }
+.demo-h1 { font-family: var(--font-display); font-size: var(--text-h1); font-weight: 700; line-height: 1.15; color: var(--wood-espresso); }
+.demo-h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 700; line-height: 1.2; color: var(--wood-espresso); }
+.demo-h3 { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: 1.3; color: var(--wood-espresso); }
+.demo-body { font-family: var(--font-body); font-size: var(--text-body); line-height: 1.7; }
+.demo-small { font-family: var(--font-body); font-size: var(--text-small); color: var(--ink-muted); }
+
+/* ============================================================
+   SPACING RULER
+   ============================================================ */
+.ruler { display: grid; gap: var(--space-2); margin-bottom: var(--space-8); }
+.ruler__row { align-items: center; display: grid; gap: var(--space-4); grid-template-columns: 5.5rem 4rem 1fr; }
+.ruler__name { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.8rem; font-weight: 600; }
+.ruler__px { color: var(--ink-muted); font-size: 0.8rem; font-variant-numeric: tabular-nums; }
+.ruler__bar { background: var(--oak); border-radius: 3px; height: 14px; }
+
+/* ============================================================
+   COMPONENT DEMOS
+   ============================================================ */
+.demo-stage {
+  background: var(--parchment-soft);
+  border: 1px dashed var(--oak-light);
+  border-radius: var(--radius-panel);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding: var(--space-8);
+}
+.demo-stage--dark { background: var(--wood-espresso); border-color: var(--wood-warm); }
+.demo-stage--block { display: block; }
+
+.btn {
+  background: var(--rust);
+  border: 2px solid transparent;
+  border-radius: var(--radius-button);
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:hover { background: var(--rust-dark); box-shadow: var(--shadow-card); transform: translateY(-2px); }
+.btn--secondary { background: transparent; border-color: var(--wood-mid); color: var(--wood-mid); }
+.btn--secondary:hover { background: var(--wood-mid); box-shadow: var(--shadow-card); color: #fff; }
+.btn--on-dark { background: var(--oak); color: var(--wood-espresso); }
+.btn--on-dark:hover { background: var(--oak-light); }
+
+.pill {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(217, 174, 116, 0.55);
+  border-radius: var(--radius-pill);
+  color: var(--cream);
+  display: inline-flex;
+  font-weight: 600;
+  gap: var(--space-2);
+  padding: 0.6rem 1.3rem;
+  text-decoration: none;
+}
+
+.icon-badge {
+  align-items: center;
+  background: var(--oak-light);
+  border-radius: var(--radius-button);
+  display: inline-flex;
+  font-size: 1.5rem;
+  height: 56px;
+  justify-content: center;
+  line-height: 1;
+  width: 56px;
+}
+.icon-badge--round { border-radius: 50%; }
+.icon-badge--oak { background: var(--oak); }
+
+.card-row { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.card {
+  background: var(--cream);
+  border: var(--border-hairline);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-6);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-4px); }
+.card h4 { font-size: var(--text-h3); margin-bottom: var(--space-3); }
+.card p { color: var(--ink-muted); font-size: 0.95rem; margin: 0; }
+
+.callout {
+  background: var(--parchment);
+  border-left: 4px solid var(--success);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+}
+.callout h4 { color: var(--success); margin-bottom: var(--space-2); }
+.callout p { font-style: italic; margin: 0; }
+
+.check-list { list-style: none; margin: 0; padding: 0; }
+.check-list li { margin-bottom: var(--space-2); padding-left: 1.6rem; position: relative; }
+.check-list li::before {
+  color: var(--success);
+  content: "✓";
+  font-weight: 700;
+  left: 0;
+  position: absolute;
+}
+
+.hours { border-collapse: collapse; width: 100%; }
+.hours td { border-bottom: 1px solid var(--wood-mid); color: var(--cream); padding: var(--space-2) 0; }
+.hours td:first-child { font-weight: 600; padding-right: var(--space-6); }
+.hours td:last-child { text-align: right; white-space: nowrap; }
+
+/* ============================================================
+   LOGO RULES
+   ============================================================ */
+.logo-grid { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.logo-plate {
+  align-items: center;
+  border: var(--border-hairline);
+  border-radius: var(--radius-card);
+  display: flex;
+  justify-content: center;
+  min-height: 200px;
+  padding: var(--space-8);
+}
+.logo-plate img { height: auto; max-width: 190px; width: 100%; }
+.plate--cream { background: var(--cream); }
+.plate--parchment { background: var(--parchment); }
+.plate--espresso { background: var(--wood-espresso); }
+.plate--oak { background: var(--oak); }
+.plate-caption { color: var(--ink-muted); font-size: var(--text-small); margin-top: var(--space-2); text-align: center; }
+
+.clearspace {
+  background: var(--cream);
+  border: var(--border-hairline);
+  border-radius: var(--radius-card);
+  display: inline-block;
+  padding: var(--space-8);
+  position: relative;
+}
+.clearspace__inner { border: 2px dashed var(--rust); padding: 44px; }
+.clearspace__inner img { display: block; height: auto; max-width: 180px; width: 100%; }
+.clearspace__label {
+  color: var(--rust);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rules { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.rule-box {
+  border-radius: var(--radius-card);
+  border-top: 4px solid;
+  background: var(--cream);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-6);
+}
+.rule-box--do { border-top-color: var(--success); }
+.rule-box--dont { border-top-color: var(--rust-dark); }
+.rule-box h4 { margin-bottom: var(--space-3); }
+.rule-box--do h4 { color: var(--success); }
+.rule-box--dont h4 { color: var(--rust-dark); }
+.rule-box ul { margin: 0; padding-left: 1.2rem; }
+.rule-box li { margin-bottom: var(--space-2); }
+
+/* ============================================================
+   CHANGE NOTICE
+   ============================================================ */
+.notice {
+  background: var(--cream);
+  border: 2px solid var(--oak);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-6) var(--space-8);
+}
+.notice h3 { font-size: var(--text-h3); margin-bottom: var(--space-3); }
+.notice ol { margin: 0; padding-left: 1.3rem; }
+.notice li { margin-bottom: var(--space-3); }
+.notice li:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   CODE BLOCK
+   ============================================================ */
+pre.tokens {
+  background: var(--wood-espresso);
+  border-radius: var(--radius-card);
+  color: var(--parchment);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  margin: 0;
+  overflow-x: auto;
+  padding: var(--space-6);
+}
+pre.tokens .c { color: var(--oak); }
+
+/* ============================================================
+   FOOT
+   ============================================================ */
+.foot {
+  background: var(--wood-espresso);
+  color: var(--parchment);
+  font-size: var(--text-small);
+  padding: var(--space-12) 0;
+}
+.foot p { margin: 0; max-width: none; }
+
+/* ============================================================
+   RESPONSIVE + MOTION
+   ============================================================ */
+@media (max-width: 600px) {
+  .ribbon h2 { padding: var(--space-2) var(--space-4); }
+  .ruler__row { grid-template-columns: 4.5rem 3rem 1fr; }
+  .band { padding: var(--space-16) 0; }
+  .demo-stage { padding: var(--space-4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">Brand guidelines · v1.0</p>
+    <h1>Roy's Furniture Repair</h1>
+    <p class="lede">Warm &amp; Artisanal — a design system derived from the shop emblem.
+      Wood, parchment, oak and rust; slab-serif headings on a humanist sans. Built to make a
+      homeowner with a broken recliner feel confident enough to call.</p>
+  </div>
+</header>
+
+<!-- ========================= DIRECTION ========================= -->
+<section class="band band--cream">
+  <div class="wrap">
+    <div class="ribbon"><h2>Direction</h2></div>
+    <p class="section-note">The logo is a hand-crafted emblem — wood-grain lettering, crossed
+      hammer and wrench, a parchment ribbon banner, deep espresso outlines. It reads
+      <em>artisan workshop</em>, not <em>corporate services firm</em>.</p>
+
+    <div class="card-row">
+      <div class="card">
+        <h4>Tactile, not slick</h4>
+        <p>Trust and craftsmanship are the conversion levers. Warmth, texture and evidence of a
+          real person beat polish and gradients.</p>
+      </div>
+      <div class="card">
+        <h4>Not another blue handyman site</h4>
+        <p>The retired <span class="mono">#3498db</span> / <span class="mono">#e74c3c</span>
+          palette clashed with the emblem and looked like every competitor in local search.</p>
+      </div>
+      <div class="card">
+        <h4>Restraint on texture</h4>
+        <p>Wood grain and paper noise register as warmth, never as a background image. If you
+          notice the texture, it is too strong.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= COLOUR ========================= -->
+<section class="band">
+  <div class="wrap">
+    <div class="ribbon"><h2>Colour system</h2></div>
+    <p class="section-note">Seventeen tokens in five groups, all sampled from the logo artwork.
+      No hex value changed during the accessibility audit — but two tokens were re-scoped. See
+      <a href="#contrast">Contrast &amp; accessibility</a>.</p>
+
+    <h3 class="sub">Wood — primary</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch__chip" style="background:#3E2415"></div><div class="swatch__body"><span class="swatch__token">--wood-espresso</span><span class="swatch__hex">#3E2415</span><span class="swatch__use">Headings, primary text, footer background</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#5A3620"></div><div class="swatch__body"><span class="swatch__token">--wood-dark</span><span class="swatch__hex">#5A3620</span><span class="swatch__use">Dark surfaces, nav background</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#6B4423"></div><div class="swatch__body"><span class="swatch__token">--wood-mid</span><span class="swatch__hex">#6B4423</span><span class="swatch__use">Borders, dividers, secondary button outline</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#8B5A2B"></div><div class="swatch__body"><span class="swatch__token">--wood-warm</span><span class="swatch__hex">#8B5A2B</span><span class="swatch__use">Mid-tone fills, hover states — <strong>and all oak-toned text on light surfaces</strong></span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#C08A4E"></div><div class="swatch__body"><span class="swatch__token">--oak</span><span class="swatch__hex">#C08A4E</span><span class="swatch__use">Brand accent: fills, icon backings, active indicators. Not body text on light.</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#D9AE74"></div><div class="swatch__body"><span class="swatch__token">--oak-light</span><span class="swatch__hex">#D9AE74</span><span class="swatch__use">Hairline borders, badges, highlights, text on dark wood</span></div></div>
+    </div>
+
+    <h3 class="sub">Parchment — neutrals</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch__chip" style="background:#F5E7C8"></div><div class="swatch__body"><span class="swatch__token">--parchment</span><span class="swatch__hex">#F5E7C8</span><span class="swatch__use">Banner-style panels, callouts</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#FAF4E9"></div><div class="swatch__body"><span class="swatch__token">--parchment-soft</span><span class="swatch__hex">#FAF4E9</span><span class="swatch__use">Page background</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#FFFDF8;border-bottom:1px solid #D9AE74"></div><div class="swatch__body"><span class="swatch__token">--cream</span><span class="swatch__hex">#FFFDF8</span><span class="swatch__use">Card surfaces</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#2B1C12"></div><div class="swatch__body"><span class="swatch__token">--ink</span><span class="swatch__hex">#2B1C12</span><span class="swatch__use">Body copy</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#6E5946"></div><div class="swatch__body"><span class="swatch__token">--ink-muted</span><span class="swatch__hex">#6E5946</span><span class="swatch__use">Secondary copy, captions</span></div></div>
+    </div>
+
+    <h3 class="sub">Steel — secondary, from the tools</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch__chip" style="background:#9AA0A6"></div><div class="swatch__body"><span class="swatch__token">--steel</span><span class="swatch__hex">#9AA0A6</span><span class="swatch__use">Muted UI and borders <strong>on dark only</strong></span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#5F6670"></div><div class="swatch__body"><span class="swatch__token">--steel-dark</span><span class="swatch__hex">#5F6670</span><span class="swatch__use">Icon strokes, subtle text on light</span></div></div>
+    </div>
+
+    <h3 class="sub">Rust — action</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch__chip" style="background:#B5461F"></div><div class="swatch__body"><span class="swatch__token">--rust</span><span class="swatch__hex">#B5461F</span><span class="swatch__use">Primary CTA buttons, focus rings</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#8F3616"></div><div class="swatch__body"><span class="swatch__token">--rust-dark</span><span class="swatch__hex">#8F3616</span><span class="swatch__use">CTA hover / active</span></div></div>
+    </div>
+
+    <h3 class="sub">Semantic</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch__chip" style="background:#4A7C3F"></div><div class="swatch__body"><span class="swatch__token">--success</span><span class="swatch__hex">#4A7C3F</span><span class="swatch__use">Checkmarks, positive confirmations</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#D9A020"></div><div class="swatch__body"><span class="swatch__token">--star</span><span class="swatch__hex">#D9A020</span><span class="swatch__use">Star ratings <strong>on dark surfaces only</strong> — see audit</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= CONTRAST ========================= -->
+<section class="band band--cream" id="contrast">
+  <div class="wrap">
+    <div class="ribbon"><h2>Contrast &amp; accessibility</h2></div>
+    <p class="section-note">Every pairing below was measured against WCAG 2.1: 4.5:1 for body
+      text, 3:1 for large text (≥24px, or ≥19px bold) and for meaningful non-text graphics.
+      Twenty of twenty-two proposed pairings passed outright.</p>
+
+    <div class="notice">
+      <h3>Two changes to the proposed system</h3>
+      <ol>
+        <li><strong>No hex value was repainted.</strong> The palette as specified is sound. Both
+          problems were tokens being asked to do a job they cannot do, so the fix is scoping,
+          not colour-picking — which keeps the palette faithful to the logo.</li>
+        <li><strong><span class="mono">--oak</span> is a surface token, not a text token.</strong>
+          Oak on cream measures 2.96:1 — it fails even the 3:1 non-text threshold. Use it for
+          fills, icon backings and active indicators. For oak-toned <em>text</em> on light
+          surfaces use <span class="mono">--wood-warm</span>, which is already in the palette and
+          clears 4.5:1 on every light surface. Oak <em>is</em> safe as text on
+          <span class="mono">--wood-espresso</span> (4.76:1).</li>
+        <li><strong><span class="mono">--star</span> is dark-surface only.</strong> At 2.30:1 on
+          cream it fails badly. It clears AA on espresso (6.13:1) and wood-dark (4.54:1). In
+          practice this is moot on the live site: the star row uses the ⭐ emoji, which renders in
+          its own colours and ignores CSS <span class="mono">color</span> entirely. The token is
+          scoped so nobody later mistakes it for a safe text colour.</li>
+      </ol>
+    </div>
+
+    <h3 class="sub">Measured pairings</h3>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Foreground</th><th>Background</th><th>Ratio</th><th>Grade</th><th>Where it is used</th></tr></thead>
+        <tbody>
+          <tr><td>--ink</td><td>--cream</td><td class="ratio">16.17</td><td><span class="grade grade--aaa">AAA</span></td><td>Body copy on cards</td></tr>
+          <tr><td>--ink</td><td>--parchment-soft</td><td class="ratio">15.01</td><td><span class="grade grade--aaa">AAA</span></td><td>Body copy on the page background</td></tr>
+          <tr><td>#FFFFFF</td><td>--wood-espresso</td><td class="ratio">14.31</td><td><span class="grade grade--aaa">AAA</span></td><td>Footer text</td></tr>
+          <tr><td>--wood-espresso</td><td>--cream</td><td class="ratio">14.07</td><td><span class="grade grade--aaa">AAA</span></td><td>Headings on cards</td></tr>
+          <tr><td>--ink</td><td>--parchment</td><td class="ratio">13.42</td><td><span class="grade grade--aaa">AAA</span></td><td>Callout panel copy</td></tr>
+          <tr><td>--wood-espresso</td><td>--parchment-soft</td><td class="ratio">13.07</td><td><span class="grade grade--aaa">AAA</span></td><td>Section titles</td></tr>
+          <tr><td>#FFFFFF</td><td>--wood-dark</td><td class="ratio">10.59</td><td><span class="grade grade--aaa">AAA</span></td><td>Nav links</td></tr>
+          <tr><td>#FFFFFF</td><td>--wood-mid</td><td class="ratio">8.48</td><td><span class="grade grade--aaa">AAA</span></td><td>Secondary button, filled hover</td></tr>
+          <tr><td>#FFFFFF</td><td>--rust-dark</td><td class="ratio">7.76</td><td><span class="grade grade--aaa">AAA</span></td><td>CTA hover label</td></tr>
+          <tr><td>--oak-light</td><td>--wood-espresso</td><td class="ratio">6.99</td><td><span class="grade grade--aa">AA</span></td><td>Eyebrow labels on dark</td></tr>
+          <tr><td>--wood-espresso</td><td>--oak-light</td><td class="ratio">6.99</td><td><span class="grade grade--aa">AA</span></td><td>Text on badges and icon backings</td></tr>
+          <tr><td>--ink-muted</td><td>--cream</td><td class="ratio">6.50</td><td><span class="grade grade--aa">AA</span></td><td>Captions on cards</td></tr>
+          <tr><td>--star</td><td>--wood-espresso</td><td class="ratio">6.13</td><td><span class="grade grade--aa">AA</span></td><td>Stars on dark surfaces</td></tr>
+          <tr><td>--ink-muted</td><td>--parchment-soft</td><td class="ratio">6.03</td><td><span class="grade grade--aa">AA</span></td><td>Secondary copy</td></tr>
+          <tr><td>--wood-warm</td><td>--cream</td><td class="ratio">5.75</td><td><span class="grade grade--aa">AA</span></td><td>Oak-toned text on cards</td></tr>
+          <tr><td>--steel-dark</td><td>--cream</td><td class="ratio">5.70</td><td><span class="grade grade--aa">AA</span></td><td>Icon strokes on light</td></tr>
+          <tr><td>#FFFFFF</td><td>--rust</td><td class="ratio">5.44</td><td><span class="grade grade--aa">AA</span></td><td>Primary CTA label</td></tr>
+          <tr><td>--steel</td><td>--wood-espresso</td><td class="ratio">5.42</td><td><span class="grade grade--aa">AA</span></td><td>Muted text on dark</td></tr>
+          <tr><td>--wood-warm</td><td>--parchment-soft</td><td class="ratio">5.34</td><td><span class="grade grade--aa">AA</span></td><td>Oak-toned text on the page</td></tr>
+          <tr><td>--rust</td><td>--cream</td><td class="ratio">5.35</td><td><span class="grade grade--aa">AA</span></td><td>Link text on cards</td></tr>
+          <tr><td>--oak-light</td><td>--wood-dark</td><td class="ratio">5.17</td><td><span class="grade grade--aa">AA</span></td><td>Nav hover text</td></tr>
+          <tr><td>--rust</td><td>--parchment-soft</td><td class="ratio">4.97</td><td><span class="grade grade--aa">AA</span></td><td>Link text on the page</td></tr>
+          <tr><td>--success</td><td>--cream</td><td class="ratio">4.87</td><td><span class="grade grade--aa">AA</span></td><td>Checkmarks in "Why Choose Roy?"</td></tr>
+          <tr><td>--wood-espresso</td><td>--oak</td><td class="ratio">4.76</td><td><span class="grade grade--aa">AA</span></td><td>Text on an oak fill</td></tr>
+          <tr><td>--oak</td><td>--wood-espresso</td><td class="ratio">4.76</td><td><span class="grade grade--aa">AA</span></td><td>Oak text on espresso — the one safe oak text case</td></tr>
+          <tr><td>--wood-warm</td><td>--parchment</td><td class="ratio">4.77</td><td><span class="grade grade--aa">AA</span></td><td>Oak-toned text in callouts</td></tr>
+          <tr><td>--star</td><td>--wood-dark</td><td class="ratio">4.54</td><td><span class="grade grade--aa">AA</span></td><td>Stars on wood-dark</td></tr>
+          <tr><td>--oak</td><td>--wood-dark</td><td class="ratio">3.52</td><td><span class="grade grade--large">Large / non-text</span></td><td>Active-state indicator bar — never body text</td></tr>
+          <tr><td>--oak-light</td><td>--cream</td><td class="ratio">2.01</td><td><span class="grade grade--fail">Decorative only</span></td><td>Hairline card borders. Legal — decorative boundaries are exempt from 1.4.11 — but never use it for a meaningful edge.</td></tr>
+          <tr><td>--oak</td><td>--cream</td><td class="ratio">2.96</td><td><span class="grade grade--fail">Fail</span></td><td>Retired as a text pairing. Use --wood-warm.</td></tr>
+          <tr><td>--star</td><td>--cream</td><td class="ratio">2.30</td><td><span class="grade grade--fail">Fail</span></td><td>Retired as a text pairing. Stars stay emoji.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Non-negotiables</h3>
+    <ul class="check-list">
+      <li>Every interactive element carries a visible <span class="mono">:focus-visible</span> ring — 3px <span class="mono">--rust</span>, 3px offset.</li>
+      <li>Colour never carries meaning alone: pair it with a glyph, label or position.</li>
+      <li>Tap targets are at least 44×44px.</li>
+      <li><span class="mono">prefers-reduced-motion: reduce</span> disables every transition and animation.</li>
+      <li>Body text never sits below 16px.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========================= TYPOGRAPHY ========================= -->
+<section class="band">
+  <div class="wrap">
+    <div class="ribbon"><h2>Typography</h2></div>
+    <p class="section-note">Two families, four weights. <strong>Bitter</strong> is a slab serif
+      that echoes the emblem's chunky woodblock lettering without imitating it.
+      <strong>Source Sans 3</strong> is a humanist sans, legible at small sizes and warm enough
+      not to fight the slab. Both load from Google Fonts with
+      <span class="mono">display=swap</span> and a full system fallback stack.</p>
+
+    <div class="specimen">
+      <p class="specimen__meta">Bitter 700 · --text-h1 · clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem) · line-height 1.15</p>
+      <p class="specimen__demo demo-h1">Expert Furniture Repair</p>
+    </div>
+    <div class="specimen">
+      <p class="specimen__meta">Bitter 700 · --text-h2 · clamp(1.875rem, 1.55rem + 1.4vw, 2.5rem) · line-height 1.2</p>
+      <p class="specimen__demo demo-h2">Before &amp; After Gallery</p>
+    </div>
+    <div class="specimen">
+      <p class="specimen__meta">Bitter 600 · --text-h3 · clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem) · line-height 1.3</p>
+      <p class="specimen__demo demo-h3">Upholstery &amp; Fabric Repair</p>
+    </div>
+    <div class="specimen">
+      <p class="specimen__meta">Source Sans 3 400 · --text-body · clamp(1rem, 0.99rem + 0.05vw, 1.0625rem) · line-height 1.7 · max 68ch</p>
+      <p class="specimen__demo demo-body">Bringing your cherished furniture back to life with skilled
+        craftsmanship and attention to detail. Expert repair of broken joints, loose legs, damaged
+        frames, and other structural issues to ensure your furniture is safe and stable.</p>
+    </div>
+    <div class="specimen">
+      <p class="specimen__meta">Source Sans 3 400 · --text-small · 0.875rem · --ink-muted</p>
+      <p class="specimen__demo demo-small">— Bernard Ziegler, November 2023</p>
+    </div>
+
+    <h3 class="sub">Rules</h3>
+    <ul class="check-list">
+      <li>One <span class="mono">h1</span> per page. Never skip a heading level for visual effect.</li>
+      <li>Bitter for headings only — it is not a body face at 16px.</li>
+      <li>Body measure caps at 68 characters.</li>
+      <li>Sentence case in UI labels; existing marketing copy stays exactly as written.</li>
+      <li>Never letterspace lowercase body text. Uppercase eyebrows take <span class="mono">0.16em</span>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========================= SPACING ========================= -->
+<section class="band band--cream">
+  <div class="wrap">
+    <div class="ribbon"><h2>Spacing, radii &amp; shadow</h2></div>
+    <p class="section-note">A 4px base scale. Pick from the scale; never invent an in-between
+      value. Section bands use <span class="mono">--space-20</span> vertical padding, dropping to
+      <span class="mono">--space-16</span> below 600px.</p>
+
+    <div class="ruler">
+      <div class="ruler__row"><span class="ruler__name">--space-1</span><span class="ruler__px">4px</span><div class="ruler__bar" style="width:4px"></div></div>
+      <div class="ruler__row"><span class="ruler__name">--space-2</span><span class="ruler__px">8px</span><div class="ruler__bar" style="width:8px"></div></div>
+      <div class="ruler__row"><span class="ruler__name">--space-3</span><span class="ruler__px">12px</span><div class="ruler__bar" style="width:12px"></div></div>
+      <div class="ruler__row"><span class="ruler__name">--space-4</span><span class="ruler__px">16px</span><div class="ruler__bar" style="width:16px"></div></div>
+      <div class="ruler__row"><span class="ruler__name">--space-6</span><span class="ruler__px">24px</span><div class="ruler__bar" style="width:24px"></div></div>
+      <div class="ruler__row"><span class="ruler__name">--space-8</span><span class="ruler__px">32px</span><div class="ruler__bar" style="width:32px"></div></div>
+      <div class="ruler__row"><span class="ruler__name">--space-12</span><span class="ruler__px">48px</span><div class="ruler__bar" style="width:48px"></div></div>
+      <div class="ruler__row"><span class="ruler__name">--space-16</span><span class="ruler__px">64px</span><div class="ruler__bar" style="width:64px"></div></div>
+      <div class="ruler__row"><span class="ruler__name">--space-20</span><span class="ruler__px">80px</span><div class="ruler__bar" style="width:80px"></div></div>
+      <div class="ruler__row"><span class="ruler__name">--space-24</span><span class="ruler__px">96px</span><div class="ruler__bar" style="width:96px"></div></div>
+    </div>
+
+    <h3 class="sub">Corner radii</h3>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Token</th><th>Value</th><th>Applies to</th></tr></thead>
+        <tbody>
+          <tr><td>--radius-button</td><td>8px</td><td>Buttons, badges, icon backings, inputs</td></tr>
+          <tr><td>--radius-card</td><td>12px</td><td>Cards, gallery items, tables, swatches</td></tr>
+          <tr><td>--radius-panel</td><td>14px</td><td>Modals, large panels, mobile nav sheet</td></tr>
+          <tr><td>--radius-pill</td><td>999px</td><td>The mobile header phone pill only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Shadows — warm-tinted, never neutral grey</h3>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Token</th><th>Value</th><th>Applies to</th></tr></thead>
+        <tbody>
+          <tr><td>--shadow-sm</td><td>0 1px 2px rgba(62, 36, 21, 0.06)</td><td>Resting chrome, sticky nav</td></tr>
+          <tr><td>--shadow-card</td><td>0 2px 8px rgba(62, 36, 21, 0.10)</td><td>Cards at rest</td></tr>
+          <tr><td>--shadow-card-hover</td><td>0 8px 24px rgba(62, 36, 21, 0.16)</td><td>Cards on hover, with a −4px lift</td></tr>
+          <tr><td>--shadow-overlay</td><td>0 16px 48px rgba(62, 36, 21, 0.28)</td><td>Email fallback modal, mobile nav sheet</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Section rhythm</h3>
+    <p>Alternate <span class="mono">--parchment-soft</span> and <span class="mono">--cream</span>
+      so sections read as distinct bands. <span class="mono">--parchment</span> is reserved for
+      callouts and the ribbon device — using it as a full band flattens the hierarchy.</p>
+  </div>
+</section>
+
+<!-- ========================= COMPONENTS ========================= -->
+<section class="band">
+  <div class="wrap">
+    <div class="ribbon"><h2>Component patterns</h2></div>
+    <p class="section-note">Every pattern below is live markup, not a screenshot. Hover and tab
+      through them to check states.</p>
+
+    <h3 class="sub">Buttons</h3>
+    <div class="demo-stage">
+      <a href="#components" class="btn">Get Free Local Estimate</a>
+      <a href="#components" class="btn btn--secondary">Request More Project Photos</a>
+    </div>
+    <div class="demo-stage demo-stage--dark">
+      <a href="#components" class="btn btn--on-dark">Action on dark</a>
+      <a href="#components" class="pill">📞 (703) 981-1656</a>
+    </div>
+    <p>Primary is <span class="mono">--rust</span> filled, 8px radius, −2px lift on hover.
+      Secondary is a <span class="mono">--wood-mid</span> outline on transparent that fills on
+      hover. On dark surfaces, primary flips to an <span class="mono">--oak</span> fill with
+      espresso text — white-on-rust over a wood ground is muddy.</p>
+
+    <h3 class="sub">Icon backings</h3>
+    <div class="demo-stage">
+      <span class="icon-badge">🔗</span>
+      <span class="icon-badge">🪡</span>
+      <span class="icon-badge">🚛</span>
+      <span class="icon-badge icon-badge--round icon-badge--oak">📞</span>
+      <span class="icon-badge icon-badge--round icon-badge--oak">✉️</span>
+      <span class="icon-badge icon-badge--round icon-badge--oak">📍</span>
+    </div>
+    <p>The existing emoji stay — they are friendly and cost nothing. Setting them on an
+      <span class="mono">--oak-light</span> rounded square (service cards) or an
+      <span class="mono">--oak</span> circle (contact rows) makes them read as intentional design
+      elements rather than raw emoji. Emoji are decorative: mark them
+      <span class="mono">aria-hidden="true"</span> and let the adjacent text carry the meaning.</p>
+
+    <h3 class="sub">Cards</h3>
+    <div class="demo-stage demo-stage--block">
+      <div class="card-row">
+        <div class="card">
+          <span class="icon-badge" style="margin-bottom:var(--space-4)">🔗</span>
+          <h4>Structural Repairs</h4>
+          <p>Expert repair of broken joints, loose legs, damaged frames, and other structural
+            issues to ensure your furniture is safe and stable.</p>
+        </div>
+        <div class="card">
+          <span class="icon-badge" style="margin-bottom:var(--space-4)">🪡</span>
+          <h4>Upholstery &amp; Fabric Repair</h4>
+          <p>Repair on a case-by-case basis to include dining room chairs, structural damage,
+            springs, cushions, open seams, etc.</p>
+        </div>
+        <div class="card">
+          <span class="icon-badge" style="margin-bottom:var(--space-4)">🚛</span>
+          <h4>Mobile Service</h4>
+          <p>Convenient on-site repairs available throughout Gainesville and surrounding areas.</p>
+        </div>
+      </div>
+    </div>
+    <p>Cream surface, hairline <span class="mono">--oak-light</span> border, warm shadow. On hover
+      the card lifts 4px and the shadow deepens.</p>
+
+    <h3 class="sub">Callout panel</h3>
+    <div class="demo-stage demo-stage--block">
+      <div class="callout">
+        <h4>My Mission</h4>
+        <p>"To provide excellent furniture repair service that surpasses clients' expectations
+          consistently. My immense job satisfaction as a furniture repair technician is only
+          matched by the fulfillment I get from my clients' complete satisfaction."</p>
+      </div>
+    </div>
+
+    <h3 class="sub">Checklist</h3>
+    <div class="demo-stage demo-stage--block">
+      <ul class="check-list">
+        <li>20+ years of experience</li>
+        <li>Reliable &amp; responsible</li>
+        <li>Honest &amp; cost-effective</li>
+        <li>Hundreds of satisfied customers</li>
+      </ul>
+    </div>
+    <p>The check glyph is <span class="mono">--success</span> at 4.87:1 on cream. It is a
+      <span class="mono">::before</span> pseudo-element, so the list stays a clean
+      <span class="mono">&lt;ul&gt;</span> for screen readers.</p>
+
+    <h3 class="sub">Hours table on dark</h3>
+    <div class="demo-stage demo-stage--dark demo-stage--block">
+      <table class="hours">
+        <tr><td>Service Days</td><td>Monday - Friday</td></tr>
+        <tr><td>Phone Calls Accepted</td><td>Monday - Saturday</td></tr>
+        <tr><td>Email Inquiries</td><td>Anytime</td></tr>
+        <tr><td>Sunday</td><td>Closed</td></tr>
+      </table>
+    </div>
+    <p>Values are right-aligned with <span class="mono">white-space: nowrap</span> so day ranges
+      never break across lines.</p>
+
+    <h3 class="sub">Dividers</h3>
+    <div class="divider">✦</div>
+    <p>A thin <span class="mono">--oak-light</span> rule with a small centred ornament. Use at
+      most once per section — it is punctuation, not decoration.</p>
+  </div>
+</section>
+
+<!-- ========================= LOGO ========================= -->
+<section class="band band--cream">
+  <div class="wrap">
+    <div class="ribbon"><h2>Logo usage</h2></div>
+    <p class="section-note">The emblem is the whole identity — there is no separate wordmark or
+      symbol lockup. <strong>The artwork must never be altered.</strong> Resize proportionally,
+      pad, and composite onto a background. Nothing else.</p>
+
+    <h3 class="sub">Approved backgrounds</h3>
+    <div class="logo-grid">
+      <div>
+        <div class="logo-plate plate--cream">
+          <img src="https://ik.imagekit.io/k0nrt15/roys-furniture-repair/logo-rfr.png" alt="Roy's Furniture Repair emblem on a cream background">
+        </div>
+        <p class="plate-caption">--cream · preferred</p>
+      </div>
+      <div>
+        <div class="logo-plate plate--parchment">
+          <img src="https://ik.imagekit.io/k0nrt15/roys-furniture-repair/logo-rfr.png" alt="Roy's Furniture Repair emblem on a parchment background">
+        </div>
+        <p class="plate-caption">--parchment · print and packaging</p>
+      </div>
+      <div>
+        <div class="logo-plate plate--espresso">
+          <img src="https://ik.imagekit.io/k0nrt15/roys-furniture-repair/logo-rfr.png" alt="Roy's Furniture Repair emblem on a deep espresso background">
+        </div>
+        <p class="plate-caption">--wood-espresso · site header, dark contexts</p>
+      </div>
+      <div>
+        <div class="logo-plate plate--oak">
+          <img src="https://ik.imagekit.io/k0nrt15/roys-furniture-repair/logo-rfr.png" alt="Roy's Furniture Repair emblem on an oak background">
+        </div>
+        <p class="plate-caption">--oak · avoid — too little separation</p>
+      </div>
+    </div>
+
+    <h3 class="sub">Clear space</h3>
+    <p>Keep clear space on all four sides equal to the height of the hammer head in the emblem —
+      roughly 25% of the logo's total height. Nothing crosses this boundary: no text, no rules, no
+      photo edges, no other logos.</p>
+    <div class="clearspace">
+      <p class="clearspace__label">Minimum clear space</p>
+      <div class="clearspace__inner">
+        <img src="https://ik.imagekit.io/k0nrt15/roys-furniture-repair/logo-rfr.png" alt="Roy's Furniture Repair emblem showing the minimum clear space boundary">
+      </div>
+    </div>
+
+    <h3 class="sub">Minimum sizes</h3>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Context</th><th>Minimum</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Screen</td><td>64px tall</td><td>Below this the ribbon lettering closes up and stops being legible</td></tr>
+          <tr><td>Site header</td><td>65px tall</td><td>72px on mobile, stacked above the wordmark text</td></tr>
+          <tr><td>Favicon</td><td>16px</td><td>Reads as a shape, not as legible text — expected and acceptable</td></tr>
+          <tr><td>Print</td><td>0.75in tall</td><td>Source from the full-resolution original, never an upscaled export</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Do and don't</h3>
+    <div class="rules">
+      <div class="rule-box rule-box--do">
+        <h4>Do</h4>
+        <ul>
+          <li>Scale proportionally with LANCZOS resampling</li>
+          <li>Preserve the alpha channel on every transparent export</li>
+          <li>Pad with a flat approved background colour</li>
+          <li>Place on cream, parchment or espresso</li>
+          <li>Export from the full-resolution original every time</li>
+        </ul>
+      </div>
+      <div class="rule-box rule-box--dont">
+        <h4>Don't</h4>
+        <ul>
+          <li>Recolour, tint, or apply filters, gradients or drop shadows</li>
+          <li>Crop, rotate, skew, stretch, or redraw any part of it</li>
+          <li>Add an outline, glow, or container stroke</li>
+          <li>Place it on a busy photograph or a mid-tone oak fill</li>
+          <li>Rebuild the ribbon text as live type in another font</li>
+          <li>Upscale a small export — go back to the original</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= MOTION ========================= -->
+<section class="band">
+  <div class="wrap">
+    <div class="ribbon"><h2>Motion</h2></div>
+    <p class="section-note">Motion confirms an action or reveals content. It never decorates.</p>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Interaction</th><th>Duration / easing</th><th>Behaviour</th></tr></thead>
+        <tbody>
+          <tr><td>Card hover</td><td>250ms ease</td><td>−4px translate, shadow deepens</td></tr>
+          <tr><td>Button hover</td><td>200ms ease</td><td>−2px translate, background darkens</td></tr>
+          <tr><td>Scroll reveal</td><td>600ms ease-out</td><td>Fade in, +30px → 0, fired once by IntersectionObserver</td></tr>
+          <tr><td>Sticky nav</td><td>300ms ease-out</td><td>Slides down from −100%</td></tr>
+          <tr><td>Mobile nav sheet</td><td>400ms cubic-bezier(0.4, 0, 0.2, 1)</td><td>Expands, items stagger 50ms apart</td></tr>
+          <tr><td>Toasts</td><td>300ms ease</td><td>Slide in from the right, slide out on dismiss</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:var(--space-6)">Everything above collapses to
+      <span class="mono">0.01ms</span> under
+      <span class="mono">@media (prefers-reduced-motion: reduce)</span>. Content that fades in on
+      scroll must be visible by default and animated <em>from</em> that state, so a reader who
+      disables motion never sees a blank page.</p>
+  </div>
+</section>
+
+<!-- ========================= TOKEN DUMP ========================= -->
+<section class="band band--cream">
+  <div class="wrap">
+    <div class="ribbon"><h2>Copy-paste tokens</h2></div>
+    <p class="section-note">The canonical <span class="mono">:root</span> block. This is the same
+      declaration used at the top of this page and of <span class="mono">index.html</span>.</p>
+<pre class="tokens">:root {
+  <span class="c">/* Wood — primary */</span>
+  --wood-espresso: #3E2415;
+  --wood-dark: #5A3620;
+  --wood-mid: #6B4423;
+  --wood-warm: #8B5A2B;   <span class="c">/* also: oak-toned TEXT on light surfaces */</span>
+  --oak: #C08A4E;         <span class="c">/* fills + indicators only — not text on light */</span>
+  --oak-light: #D9AE74;
+
+  <span class="c">/* Parchment — neutrals */</span>
+  --parchment: #F5E7C8;
+  --parchment-soft: #FAF4E9;
+  --cream: #FFFDF8;
+  --ink: #2B1C12;
+  --ink-muted: #6E5946;
+
+  <span class="c">/* Steel — secondary */</span>
+  --steel: #9AA0A6;       <span class="c">/* on dark surfaces only */</span>
+  --steel-dark: #5F6670;
+
+  <span class="c">/* Rust — action */</span>
+  --rust: #B5461F;
+  --rust-dark: #8F3616;
+
+  <span class="c">/* Semantic */</span>
+  --success: #4A7C3F;
+  --star: #D9A020;        <span class="c">/* on dark surfaces only */</span>
+
+  <span class="c">/* Type */</span>
+  --font-display: 'Bitter', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+               Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  --text-h1: clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem);
+  --text-h2: clamp(1.875rem, 1.55rem + 1.4vw, 2.5rem);
+  --text-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --text-body: clamp(1rem, 0.99rem + 0.05vw, 1.0625rem);
+  --text-small: 0.875rem;
+
+  <span class="c">/* Spacing — 4px base */</span>
+  --space-1: 0.25rem;  --space-2: 0.5rem;   --space-3: 0.75rem;
+  --space-4: 1rem;     --space-6: 1.5rem;   --space-8: 2rem;
+  --space-12: 3rem;    --space-16: 4rem;    --space-20: 5rem;  --space-24: 6rem;
+
+  <span class="c">/* Radii */</span>
+  --radius-button: 8px;
+  --radius-card: 12px;
+  --radius-panel: 14px;
+  --radius-pill: 999px;
+
+  <span class="c">/* Shadows — warm-tinted, never neutral grey */</span>
+  --shadow-sm: 0 1px 2px rgba(62, 36, 21, 0.06);
+  --shadow-card: 0 2px 8px rgba(62, 36, 21, 0.10);
+  --shadow-card-hover: 0 8px 24px rgba(62, 36, 21, 0.16);
+  --shadow-overlay: 0 16px 48px rgba(62, 36, 21, 0.28);
+
+  --border-hairline: 1px solid var(--oak-light);
+  --measure: 68ch;
+}</pre>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Roy's Furniture Repair — brand guidelines v1.0 · Gainesville, VA · (703) 981-1656</p>
+    <p style="margin-top:var(--space-2);opacity:0.75">Internal reference. Not indexed. Contrast
+      ratios measured against WCAG 2.1 using the sRGB relative-luminance formula.</p>
+  </div>
+</footer>
+
+</body>
+</html>
