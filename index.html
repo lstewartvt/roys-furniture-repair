@@ -1922,7 +1922,8 @@ section { scroll-margin-top: 88px; }
 
       closeMenu();
       if (document.getElementById(href.slice(1))) {
-        history.pushState(null, '', href);
+        // The top of the page is '/', not '/#home' — no reason to dirty the URL.
+        history.pushState(null, '', href === '#home' ? window.location.pathname : href);
         scrollToHash(href);
       }
     });
