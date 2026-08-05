@@ -49,11 +49,11 @@
 <link rel="canonical" href="https://www.roysfurniturerepair.com">
 
 <!-- Favicon / app icons -->
-<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#5A3620">
 
 <!-- Fonts -->
@@ -667,16 +667,14 @@ img { display: block; max-width: 100%; }
 
 .roy-portrait {
   aspect-ratio: 1 / 1;
-  height: 240px;
-  width: 240px;
-  background: linear-gradient(135deg, var(--parchment) 0%, var(--oak-light) 100%);
-  border: 3px solid var(--oak);
+  /* The artwork supplies its own wood ring — a CSS border would double it. */
   border-radius: 50%;
   box-shadow: var(--shadow-card-hover);
   display: block;
+  height: 240px;
   margin: 0 auto var(--space-6);
   object-fit: cover;
-  object-position: 50% 45%;
+  width: 240px;
 }
 
 /* Credentials run full width beneath the story rather than sitting in a box. */
@@ -1476,9 +1474,9 @@ section { scroll-margin-top: 88px; }
       <div class="about-grid">
         <div class="about-aside">
           <img class="roy-portrait"
-               src="https://ik.imagekit.io/k0nrt15/roys-furniture-repair/headshot.jpg"
-               alt="Roy, owner and lead technician of Roy's Furniture Repair"
-               width="200" height="200" loading="lazy" decoding="async">
+               src="assets/img/roy-portrait.png"
+               alt="Illustrated portrait of Roy, owner and lead technician of Roy's Furniture Repair"
+               width="720" height="720" loading="lazy" decoding="async">
         </div>
         <div class="about-body">
           <p>As the owner and lead technician of Roy's Furniture Repair, I bring over <strong>twenty years of dedicated experience</strong> to every project. My journey in furniture restoration began in 2000, when I had the privilege of working alongside seasoned professionals who taught me the fundamentals of the craft.</p>
@@ -1512,11 +1510,6 @@ section { scroll-margin-top: 88px; }
           <span class="icon-badge" aria-hidden="true">🔗</span>
           <h3>Structural Repairs</h3>
           <p>Expert repair of broken joints, loose legs, damaged frames, and other structural issues to ensure your furniture is safe and stable.</p>
-        </div>
-        <div class="service-row reveal">
-          <span class="icon-badge" aria-hidden="true">🪡</span>
-          <h3>Upholstery &amp; Fabric Repair</h3>
-          <p>Repair on a case-by-case basis to include dining room chairs, structural damage, springs, cushions, open seams, etc.</p>
         </div>
         <div class="service-row reveal">
           <span class="icon-badge" aria-hidden="true">🚛</span>
